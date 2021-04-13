@@ -53,14 +53,14 @@ async def bodyrender(ctx, *args):
 @bot.command(name='servstat', help='Displays the status of TG and other Minecraft servers.')
 async def servstat(ctx):
     print('Checking Server Statuses')
-    iplist = ['mc.rteenagers.com', 'survival.rteenagers.com', 'earth.rteenagers.com', 'pee.rteenagers.com', 'play.pvplegacy.net', 'mc.hypixel.net']
+    iplist = ['mc.rteenagers.com','play.pvplegacy.net', 'mc.hypixel.net']
     embed = discord.Embed(title="Server Status", color = discord.Color.purple())
     for ip in iplist:
         try:
             server = MinecraftServer.lookup(ip)
-            output = f":green_circle: Server has {server.status().players.online} players and replied in {server.status().latency} ms"
+            output = f":green_circle: Server has **{server.status().players.online}** players and replied in **{server.status().latency}** ms"
         except:
-            output = ":red_circle: Uh oh, this server seems to be offline!"
+            output = ":red_circle: **Uh oh, this server seems to be offline!**"
         print(output)
         embed.add_field(name=f"`{ip}`", value=output, inline=True)
     await ctx.send(embed=embed)
