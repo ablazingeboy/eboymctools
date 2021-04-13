@@ -3,6 +3,7 @@ import discord
 from dotenv import load_dotenv
 from discord.ext import commands
 from mojang import MojangAPI
+from mcstatus import MinecraftServer
 
 load_dotenv()
 TOKEN = os.getenv('BOT_TOKEN')
@@ -48,6 +49,21 @@ async def bodyrender(ctx, *args):
         await ctx.send(embed=embed)
     else:
         await pull_crafatar(ctx, args[0], 'skins', 'Skin', '')
+
+@bot.command(name='servstat', help='Displays the status of TG and other Minecraft servers.')
+async def servstat(ctx):
+    print('Checking Server Statuses')
+    iplist = ['mc.rteenagers.com', 'survival.rteenagers.com', 'earth.rteenagers.com', 'pee.rteenagers.com', 'play.pvplegacy.net', 'mc.hypixel.net']
+    embed = discord.Embed(title="Server Status", color = discord.Color.purple())
+    for ip in iplist:
+        try:
+            server = MinecraftServer.lookup(ip)
+            output = f":green_circle: Server has {server.status().players.online} players and replied in {server.status().latency} ms"
+        except:
+            output = ":red_circle: Uh oh, this server seems to be offline!"
+        print(output)
+        embed.add_field(name=f"`{ip}`", value=output, inline=True)
+    await ctx.send(embed=embed)
 
 #-----------------------------------------------------------------------------#
 # Helper Methods #
