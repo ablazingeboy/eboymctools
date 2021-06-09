@@ -137,6 +137,16 @@ async def ping(ctx):
         embed=discord.Embed(title="Pong!", description=f"The ping is **{round(bot.latency *1000)}** milliseconds!", color=0x990000)
     await ctx.send(embed=embed)
 
+@bot.command(name='invite', help='Provides a link to invite this bot to your server!')
+async def invite(ctx):
+    invite_embed = discord.Embed(
+        title='Add eboy\'s mc tools to your server!',
+        url='https://discord.com/api/oauth2/authorize?client_id=822305897048178688&permissions=126016&scope=bot',
+        color=discord.Color.red()
+    )
+    invite_embed.set_footer(text=f'Currently in {len(bot.guilds)} servers! | Made with <3 by ablazingeboy#7375')
+    await ctx.send(embed=invite_embed)
+
 #-----------------------------------------------------------------------------#
 
 bot.run(TOKEN)
